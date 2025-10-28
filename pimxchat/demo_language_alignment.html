@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language-Based Message Alignment Demo</title>
+    <link rel="stylesheet" href="css/chat.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .demo-content {
+            padding: 20px;
+        }
+        
+        .demo-section {
+            margin-bottom: 30px;
+        }
+        
+        .demo-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .demo-messages {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .demo-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        
+        .demo-input button {
+            padding: 10px 20px;
+            background: #8E54E9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .demo-input button:hover {
+            background: #7440d3;
+        }
+        
+        .language-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .language-info strong {
+            color: #8E54E9;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>Language-Based Message Alignment Demo</h1>
+            <p>Test how messages align based on the language direction</p>
+        </div>
+        
+        <div class="demo-content">
+            <div class="demo-section">
+                <h3>How it works:</h3>
+                <div class="language-info">
+                    <p><strong>RTL Languages (Right-to-Left):</strong> Persian, Arabic, Hebrew, etc.</p>
+                    <p><strong>LTR Languages (Left-to-Right):</strong> English, French, Spanish, etc.</p>
+                    <p>When you type a message, the AI response will automatically align based on the detected language direction.</p>
+                </div>
+            </div>
+            
+            <div class="demo-section">
+                <h3>Try it out:</h3>
+                <div class="demo-input">
+                    <input type="text" id="demo-input" placeholder="Type a message in any language...">
+                    <button onclick="addDemoMessage()">Send</button>
+                </div>
+                
+                <div class="demo-messages" id="demo-messages">
+                    <!-- Demo messages will be added here -->
+                </div>
+            </div>
+            
+            <div class="demo-section">
+                <h3>Example messages:</h3>
+                <div class="demo-messages">
+                    <div class="message-bubble user rtl-aligned">
+                        <p>سلام، حال شما چطور است؟</p>
+                    </div>
+                    <div class="message-bubble bot rtl-aligned">
+                        <p>سلام! ممنون، حال من خوب است. شما چطور هستید؟</p>
+                    </div>
+                    
+                    <div class="message-bubble user ltr-aligned">
+                        <p>Hello, how are you?</p>
+                    </div>
+                    <div class="message-bubble bot ltr-aligned">
+                        <p>Hello! I'm doing well, thank you. How are you?</p>
+                    </div>
+                    
+                    <div class="message-bubble user rtl-aligned">
+                        <p>مرحبا، كيف حالك؟</p>
+                    </div>
+                    <div class="message-bubble bot rtl-aligned">
+                        <p>أهلاً وسهلاً! أنا بخير، شكراً لك. كيف حالك أنت؟</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language detection utility (copied from chat.js)
+        function detectLanguageDirection(text) {
+            // RTL language patterns (Persian, Arabic, Hebrew, etc.)
+            const rtlPatterns = [
+                /[\u0600-\u06FF]/, // Arabic
+                /[\u0750-\u077F]/, // Arabic Supplement
+                /[\u08A0-\u08FF]/, // Arabic Extended-A
+                /[\uFB50-\uFDFF]/, // Arabic Presentation Forms-A
+                /[\uFE70-\uFEFF]/, // Arabic Presentation Forms-B
+                /[\u0590-\u05FF]/, // Hebrew
+                /[\uFB1D-\uFB4F]/, // Hebrew Presentation Forms
+                /[\u0780-\u07BF]/, // Thaana
+                /[\u0D80-\u0DFF]/, // Sinhala
+                /[\u0E80-\u0EFF]/, // Lao
+                /[\u0F00-\u0FFF]/, // Tibetan
+                /[\u1000-\u109F]/, // Myanmar
+                /[\u1780-\u17FF]/, // Khmer
+                /[\u1E00-\u1EFF]/, // Latin Extended Additional
+                /[\u2000-\u206F]/, // General Punctuation
+                /[\u2070-\u209F]/, // Superscripts and Subscripts
+                /[\u20A0-\u20CF]/, // Currency Symbols
+                /[\u2100-\u214F]/, // Letterlike Symbols
+                /[\u2150-\u218F]/, // Number Forms
+                /[\u2190-\u21FF]/, // Arrows
+                /[\u2200-\u22FF]/, // Mathematical Operators
+                /[\u2300-\u23FF]/, // Miscellaneous Technical
+                /[\u2400-\u243F]/, // Control Pictures
+                /[\u2440-\u245F]/, // Optical Character Recognition
+                /[\u2460-\u24FF]/, // Enclosed Alphanumerics
+                /[\u2500-\u257F]/, // Box Drawing
+                /[\u2580-\u259F]/, // Block Elements
+                /[\u25A0-\u25FF]/, // Geometric Shapes
+                /[\u2600-\u26FF]/, // Miscellaneous Symbols
+                /[\u2700-\u27BF]/, // Dingbats
+                /[\u27C0-\u27EF]/, // Miscellaneous Mathematical Symbols-A
+                /[\u27F0-\u27FF]/, // Supplemental Arrows-A
+                /[\u2800-\u28FF]/, // Braille Patterns
+                /[\u2900-\u297F]/, // Supplemental Arrows-B
+                /[\u2980-\u29FF]/, // Miscellaneous Mathematical Symbols-B
+                /[\u2A00-\u2AFF]/, // Supplemental Mathematical Operators
+                /[\u2B00-\u2BFF]/, // Miscellaneous Symbols and Arrows
+                /[\u2C00-\u2C5F]/, // Glagolitic
+                /[\u2C60-\u2C7F]/, // Latin Extended-C
+                /[\u2C80-\u2CFF]/, // Coptic
+                /[\u2D00-\u2D2F]/, // Georgian Supplement
+                /[\u2D30-\u2D7F]/, // Tifinagh
+                /[\u2D80-\u2DDF]/, // Ethiopic Extended
+                /[\u2DE0-\u2DFF]/, // Cyrillic Extended-A
+                /[\u2E00-\u2E7F]/, // Supplemental Punctuation
+                /[\u2E80-\u2EFF]/, // CJK Radicals Supplement
+                /[\u2F00-\u2FDF]/, // Kangxi Radicals
+                /[\u2FF0-\u2FFF]/, // Ideographic Description Characters
+                /[\u3000-\u303F]/, // CJK Symbols and Punctuation
+                /[\u3040-\u309F]/, // Hiragana
+                /[\u30A0-\u30FF]/, // Katakana
+                /[\u3100-\u312F]/, // Bopomofo
+                /[\u3130-\u318F]/, // Hangul Compatibility Jamo
+                /[\u3190-\u319F]/, // Kanbun
+                /[\u31A0-\u31BF]/, // Bopomofo Extended
+                /[\u31C0-\u31EF]/, // CJK Strokes
+                /[\u31F0-\u31FF]/, // Katakana Phonetic Extensions
+                /[\u3200-\u32FF]/, // Enclosed CJK Letters and Months
+                /[\u3300-\u33FF]/, // CJK Compatibility
+                /[\u3400-\u4DBF]/, // CJK Unified Ideographs Extension A
+                /[\u4DC0-\u4DFF]/, // Yijing Hexagram Symbols
+                /[\u4E00-\u9FFF]/, // CJK Unified Ideographs
+                /[\uA000-\uA48F]/, // Yi Syllables
+                /[\uA490-\uA4CF]/, // Yi Radicals
+                /[\uA4D0-\uA4FF]/, // Lisu
+                /[\uA500-\uA63F]/, // Vai
+                /[\uA640-\uA69F]/, // Cyrillic Extended-B
+                /[\uA6A0-\uA6FF]/, // Bamum
+                /[\uA700-\uA71F]/, // Modifier Tone Letters
+                /[\uA720-\uA7FF]/, // Latin Extended-D
+                /[\uA800-\uA82F]/, // Syloti Nagri
+                /[\uA830-\uA83F]/, // Common Indic Number Forms
+                /[\uA840-\uA87F]/, // Phags-pa
+                /[\uA880-\uA8DF]/, // Saurashtra
+                /[\uA8E0-\uA8FF]/, // Devanagari Extended
+                /[\uA900-\uA92F]/, // Kayah Li
+                /[\uA930-\uA95F]/, // Rejang
+                /[\uA960-\uA97F]/, // Hangul Jamo Extended-A
+                /[\uA980-\uA9DF]/, // Javanese
+                /[\uA9E0-\uA9FF]/, // Myanmar Extended-B
+                /[\uAA00-\uAA5F]/, // Cham
+                /[\uAA60-\uAA7F]/, // Myanmar Extended-A
+                /[\uAA80-\uAADF]/, // Tai Viet
+                /[\uAAE0-\uAAFF]/, // Meetei Mayek Extensions
+                /[\uAB00-\uAB2F]/, // Ethiopic Extended-A
+                /[\uAB30-\uAB6F]/, // Latin Extended-E
+                /[\uAB70-\uABBF]/, // Cherokee Supplement
+                /[\uABC0-\uABFF]/, // Meetei Mayek
+                /[\uAC00-\uD7AF]/, // Hangul Syllables
+                /[\uD7B0-\uD7FF]/, // Hangul Jamo Extended-B
+                /[\uD800-\uDB7F]/, // High Surrogates
+                /[\uDB80-\uDBFF]/, // High Private Use Surrogates
+                /[\uDC00-\uDFFF]/, // Low Surrogates
+                /[\uE000-\uF8FF]/, // Private Use Area
+                /[\uF900-\uFAFF]/, // CJK Compatibility Ideographs
+                /[\uFB00-\uFB4F]/, // Alphabetic Presentation Forms
+                /[\uFB50-\uFDFF]/, // Arabic Presentation Forms-A
+                /[\uFE00-\uFE0F]/, // Variation Selectors
+                /[\uFE10-\uFE1F]/, // Vertical Forms
+                /[\uFE20-\uFE2F]/, // Combining Half Marks
+                /[\uFE30-\uFE4F]/, // CJK Compatibility Forms
+                /[\uFE50-\uFE6F]/, // Small Form Variants
+                /[\uFE70-\uFEFF]/, // Arabic Presentation Forms-B
+                /[\uFF00-\uFFEF]/, // Halfwidth and Fullwidth Forms
+                /[\uFFF0-\uFFFF]/  // Specials
+            ];
+
+            // Check if the text contains RTL characters
+            const hasRTL = rtlPatterns.some(pattern => pattern.test(text));
+            
+            // If RTL characters are found, return 'rtl', otherwise 'ltr'
+            return hasRTL ? 'rtl' : 'ltr';
+        }
+
+        // Function to apply language alignment
+        function applyLanguageAlignment(messageBubble, text, sender) {
+            const direction = detectLanguageDirection(text);
+            
+            // Remove existing alignment classes
+            messageBubble.classList.remove('ltr-aligned', 'rtl-aligned');
+            
+            // Add direction-specific class
+            messageBubble.classList.add(`${direction}-aligned`);
+            
+            // Set text direction
+            const messageText = messageBubble.querySelector('p');
+            if (messageText) {
+                messageText.style.direction = direction;
+                messageText.style.textAlign = direction === 'rtl' ? 'right' : 'left';
+            }
+        }
+
+        function addDemoMessage() {
+            const input = document.getElementById('demo-input');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const messagesContainer = document.getElementById('demo-messages');
+            
+            // Create user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message-bubble user';
+            userMessage.innerHTML = `<p>${text}</p>`;
+            messagesContainer.appendChild(userMessage);
+            
+            // Apply language alignment
+            applyLanguageAlignment(userMessage, text, 'user');
+            
+            // Create bot response (simulated)
+            setTimeout(() => {
+                const botResponse = document.createElement('div');
+                botResponse.className = 'message-bubble bot';
+                
+                // Generate a simple response based on language
+                const direction = detectLanguageDirection(text);
+                let response;
+                
+                if (direction === 'rtl') {
+                    response = 'این یک پاسخ نمونه به زبان فارسی است.';
+                } else {
+                    response = 'This is a sample response in English.';
+                }
+                
+                botResponse.innerHTML = `<p>${response}</p>`;
+                messagesContainer.appendChild(botResponse);
+                
+                // Apply language alignment
+                applyLanguageAlignment(botResponse, response, 'bot');
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 500);
+            
+            // Clear input
+            input.value = '';
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('demo-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addDemoMessage();
+            }
+        });
+    </script>
+</body>
+</html>

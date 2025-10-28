@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "https-proxy-agent": "^7.0.6",
+    "node-fetch": "^2.7.0",
+    "socks-proxy-agent": "^8.0.5",
+    "sqlite3": "^5.1.7"
+  }
+}

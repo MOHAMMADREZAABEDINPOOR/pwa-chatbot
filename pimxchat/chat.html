@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PimxChat - چت</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css"> <!-- General styles -->
+    <link rel="stylesheet" href="css/chat.css"> <!-- Specific chat styles -->
+</head>
+<body>
+    <div id="loader-wrapper">
+        <img src="images/1.png" alt="Loading..." class="loader-logo light-logo">
+        <img src="images/2.png" alt="Loading..." class="loader-logo dark-logo">
+    </div>
+
+    <div class="container" style="display:none;">
+        <main class="chat-main">
+            <canvas id="bg-canvas"></canvas>
+            <!-- Sidebar for chat history, hidden on mobile -->
+            <aside class="chat-sidebar">
+                <div class="sidebar-header">
+                    <div class="nav-buttons">
+                        <a href="/" class="nav-button" data-translate-title="homePage" title="">
+                            <i class="fas fa-home"></i>
+                        </a>
+                        <button class="theme-toggle" data-translate-title="changeTheme" title="">
+                            <i class="fas fa-moon dark-icon"></i>
+                            <i class="fas fa-sun light-icon"></i>
+                        </button>
+                        <div class="language-switcher chat-lang-switcher" title="زبان">
+                            <button class="language-button" aria-label="Change language">🌐</button>
+                            <ul class="language-dropdown">
+                                <li data-lang="fa">فارسی</li>
+                                <li data-lang="en">English</li>
+                                <li data-lang="fr">Français</li>
+                                <li data-lang="es">Español</li>
+                                <li data-lang="de">Deutsch</li>
+                                <li data-lang="ar">العربية</li>
+                                <li data-lang="it">Italiano</li>
+                                <li data-lang="ru">Русский</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <button class="new-chat-button" data-translate="newChat"><i class="fas fa-plus"></i> چت جدید</button>
+                <div class="chat-history">
+                    <!-- Chat history items will be dynamically loaded here -->
+                </div>
+            </aside>
+
+            <!-- Main chat interface -->
+            <section class="chat-interface">
+                <header class="chat-header">
+                    <button id="menu-button" class="menu-button"><i class="fas fa-bars"></i></button>
+                    <h1 class="chat-title">PimxChat</h1>
+                </header>
+                <div class="chat-messages">
+                    <!-- Initial message or chat content will be loaded here by JS -->
+                </div>
+                <div class="chat-input-area">
+                    <textarea id="chat-input" data-translate-placeholder="sendPlaceholder" placeholder="پیام خود را بنویسید..." rows="1"></textarea>
+                    <button id="send-button" data-translate-title="sendMessage" title=""><i class="fas fa-paper-plane"></i></button>
+                </div>
+                <p class="disclaimer" data-translate="disclaimer">PIMXCHAT ممکن است خطا کند. همیشه اطلاعات مهم را بررسی کنید.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/chat.js?v=1.2"></script>
+</body>
+</html>
+
