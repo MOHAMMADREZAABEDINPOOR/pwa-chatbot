@@ -14,7 +14,7 @@
 [![Express](https://img.shields.io/badge/Backend-Express_5.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![SQLite3](https://img.shields.io/badge/Database-SQLite3-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![PWA](https://img.shields.io/badge/Architecture-Progressive_Web_App-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
-[![Read in Persian](https://img.shields.io/badge/مطالعه_به_فارسی-Persian_README-008080?style=for-the-badge)](#-بخش-فوقالعاده-مفصل-و-جامع-به-زبان-فارسی-persian-documentation)
+[![Read in Persian](https://img.shields.io/badge/مطالعه_به_فارسی-Persian_README-008080?style=for-the-badge)](#persian-documentation)
 
 <p align="center">
   <b>pwa-chatbot</b> is an installable, mobile-responsive Progressive Web App (PWA) AI chat interface powered by Google Gemini and Express. Equipped with built-in SOCKS5 and HTTPS proxy bridges to circumvent regional AI API restrictions, persistent SQLite3 session storage, real-time Markdown streaming, and automated Persian RTL language alignment, pwa-chatbot brings artificial intelligence to any device.
@@ -24,7 +24,7 @@
 [Directory Anatomy](#-exhaustive-directory--file-anatomy) •
 [Proxy Bridge](#-censorship-resilient-proxy-bridge) •
 [Quick Start](#-quick-start) •
-[توضیحات فارسی](#-بخش-فوقالعاده-مفصل-و-جامع-به-زبان-فارسی-persian-documentation) •
+[توضیحات فارسی](#persian-documentation) •
 [License](#-copyleft-license--legal-attribution)
 
 </div>
@@ -87,7 +87,8 @@ Open `http://localhost:3000` in your browser.
 
 ---
 
-## 🇮🇷 بخش فوق‌العاده مفصل و جامع به زبان فارسی (Persian Documentation)
+## Persian Documentation
+### 🇮🇷 مستندات فوق‌العاده مفصل، جامع و فنی به زبان فارسی
 
 ### ۱. معرفی پروژه چت‌بات PWA هوشمند
 پروژه **pwa-chatbot** یک وب‌اپلیکیشن پیش‌رونده (**Progressive Web App**) و چت‌بات هوش مصنوعی متصل به مدل **Google Gemini Pro** است. این نرم‌افزار به صورت اختصاصی برای دور زدن تحریم‌های شرکت گوگل علیه کاربران ایرانی طراحی شده و مجهز به بریج داخلی پروکسی (پشتیبانی از SOCKS5 و HTTPS Proxy) است تا بدون خطای ۴۰۳ و بدون قطعی کار کند.
@@ -108,6 +109,6 @@ Distributed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 ---
 
 <div align="center">
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,12,24,30&height=120&section=footer" alt="Footer" width="100%" />
+<img src="./assets/footer.svg" alt="PWA Chatbot 3D Footer" width="100%" />
 <sub>Architected by <a href="https://github.com/MOHAMMADREZAABEDINPOOR"><b>MOHAMMADREZA ABEDINPOOR</b></a>. If pwa-chatbot helps your AI workflows, leave a ⭐!</sub>
 </div>
